@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scanner/pages/direcciones_page.dart';
 import 'package:qr_scanner/pages/mapas_page.dart';
+import 'package:qr_scanner/provider/db_provider.dart';
 import 'package:qr_scanner/provider/ui_provider.dart';
 import 'package:qr_scanner/widgets/custom_navigator.dart';
 import 'package:qr_scanner/widgets/scan_button.dart';
@@ -38,6 +39,10 @@ class _HomePageBody extends StatelessWidget {
 
     //Cambiar para mostrar la página respectiva
     final currentIndex = uiProvider.selectedMenuOpt;
+    //TODO: temporal leer la base de daos
+
+    final tempScan = new ScanModel(valor: 'http://google.com');
+    DBProvider.db.nuevoScan(tempScan);
 
     switch (currentIndex) {
       case 0:
