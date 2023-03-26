@@ -43,7 +43,7 @@ class _HomePageBody extends StatelessWidget {
 
     final tempScan = new ScanModel(valor: 'http://googlemyles.com');
     // DBProvider.db.nuevoScan(tempScan);
-    // DBProvider.db.getTodosLosScans().then(print);
+    DBProvider.db.getTodosLosScans().then(print);
 
     switch (currentIndex) {
       case 0:
