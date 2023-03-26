@@ -68,4 +68,25 @@ VALUES ($id, '$tipo', '$valor')
     //Es el ID del último registro insertado
     return res;
   }
+
+  Future<List<ScanModel>?> getTodosLosScans() async {
+    final db = await database;
+    final res = await db?.query('Scans');
+
+    return res!.isNotEmpty
+        ? res.map((s) => ScanModel.fromJson(s)).toList()
+        : [];
+  }
+
+  Future<List<ScanModel>?> getScansPorTipo(String tipo) async {
+    final db = await database;
+    final res = await db?.rawQuery('''
+SELECT * FROM Scans WHERE tipo = '$tipo'
+
+''');
+
+    return res!.isNotEmpty
+        ? res.map((s) => ScanModel.fromJson(s)).toList()
+        : [];
+  }
 }
