@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:qr_scanner/models/scan_model.dart';
 
 class MapaPage extends StatelessWidget {
-  const MapaPage({super.key});
+  MapaPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final scan = ModalRoute.of(context)!.settings.arguments as ScanModel;
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Mapa'),
+      ),
       body: Center(
-        child: Text('Mapa page'),
+        child: Text(scan.valor),
       ),
     );
   }
