@@ -15,6 +15,8 @@ class _MapaPageState extends State<MapaPage> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
+  MapType mapType = MapType.normal;
+
   @override
   Widget build(BuildContext context) {
     final scan = ModalRoute.of(context)!.settings.arguments as ScanModel;
@@ -25,15 +27,52 @@ class _MapaPageState extends State<MapaPage> {
       tilt: 70,
     );
 
+    //Marcadores
+    Set<Marker> markers = new Set<Marker>();
+    markers.add(
+      new Marker(
+        markerId: MarkerId('geo-location'),
+        position: scan.getLatLng()!,
+      ),
+    );
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Mapa'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.location_disabled_outlined),
+            onPressed: () async {
+              final GoogleMapController controller = await _controller.future;
+              controller.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                      target: scan.getLatLng()!, zoom: 17.5, tilt: 50),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: GoogleMap(
-        myLocationButtonEnabled: true,
-        myLocationEnabled: true,
-        mapType: MapType.normal,
+        myLocationEnabled: false,
+        mapType: mapType,
+        markers: markers,
         initialCameraPosition: puntoinicial,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (mapType == MapType.normal) {
+            mapType = MapType.satellite;
+          } else {
+            mapType = MapType.normal;
+          }
+          setState(() {});
+        },
+        child: Icon(Icons.layers),
       ),
     );
   }
