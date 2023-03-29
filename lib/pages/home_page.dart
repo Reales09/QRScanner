@@ -41,7 +41,8 @@ class _HomePageBody extends StatelessWidget {
     final currentIndex = uiProvider.selectedMenuOpt;
     //TODO: temporal leer la base de daos
 
-    final tempScan = new ScanModel(valor: 'http://google.com');
+    //final tempScan = new ScanModel(valor: 'http://google.com');
+    final tempScan = new ScanModel(valor: 'geo:4.553496, -74.135632');
     DBProvider.db.nuevoScan(tempScan);
 
     switch (currentIndex) {
