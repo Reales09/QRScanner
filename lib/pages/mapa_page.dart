@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:qr_scanner/models/scan_model.dart';
 
 class MapaPage extends StatefulWidget {
   const MapaPage({super.key});
@@ -16,14 +17,19 @@ class _MapaPageState extends State<MapaPage> {
 
   @override
   Widget build(BuildContext context) {
+    final scan = ModalRoute.of(context)!.settings.arguments as ScanModel;
+
     final CameraPosition puntoinicial = CameraPosition(
-      target: LatLng(37.42796133580664, -122.085749655962),
-      zoom: 14.4746,
+      target: scan.getLatLng()!,
+      zoom: 17,
+      tilt: 70,
     );
 
     return Scaffold(
       body: GoogleMap(
-        mapType: MapType.hybrid,
+        myLocationButtonEnabled: true,
+        myLocationEnabled: true,
+        mapType: MapType.normal,
         initialCameraPosition: puntoinicial,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
